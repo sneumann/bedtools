@@ -13,13 +13,14 @@ RELEASED_VERSION_FILE=./src/utils/version/version_release.txt
 # define our object and binary directories
 export OBJ_DIR	= obj
 export BIN_DIR	= bin
-export SRC_DIR	= src
+export SRC_DIR	= $(CURDIR)/src
 export UTIL_DIR	= src/utils
-export CXX		= g++
+export CXX		= i586-mingw32msvc-g++
 ifeq ($(DEBUG),1)
 export CXXFLAGS = -Wall -O0 -g -fno-inline -fkeep-inline-functions -D_FILE_OFFSET_BITS=64 -fPIC -DDEBUG -D_DEBUG
 else
-export CXXFLAGS = -Wall -O2 -D_FILE_OFFSET_BITS=64 -fPIC
+#export CXXFLAGS = -Wall -O2 -D_FILE_OFFSET_BITS=64 -fPIC
+export CXXFLAGS = -Wall -D_FILE_OFFSET_BITS=64 -D_WIN32_WINNT=0x0501 -I$(SRC_DIR)/zlib/include -I/usr/i586-mingw32msvc/include/ -L$(SRC_DIR)/zlib/lib32
 endif
 export LIBS		= -lz
 export BT_ROOT  = src/utils/BamTools/
@@ -83,15 +84,13 @@ BUILT_OBJECTS = $(OBJ_DIR)/*.o
 
 all: print_banner $(OBJ_DIR) $(BIN_DIR) autoversion $(UTIL_SUBDIRS) $(SUBDIRS)
 	@echo "- Building main bedtools binary."
-	@$(CXX) $(CXXFLAGS) -c src/bedtools.cpp -o obj/bedtools.o -I$(UTIL_DIR)/version/
-	@$(CXX) $(LDFLAGS) $(CXXFLAGS) -o $(BIN_DIR)/bedtools $(BUILT_OBJECTS) -L$(UTIL_DIR)/BamTools/lib/ -lbamtools $(LIBS)
+	$(CXX) $(CXXFLAGS) -c src/bedtools.cpp -o obj/bedtools.o -I$(UTIL_DIR)/version/
+	$(CXX) $(LDFLAGS) $(CXXFLAGS) -o $(BIN_DIR)/bedtools $(BUILT_OBJECTS) -L$(UTIL_DIR)/BamTools/lib/ -lbamtools $(LIBS)
 	@echo "done."
-	
 	@echo "- Creating executables for old CLI."
 	@python scripts/makeBashScripts.py
 	@chmod +x bin/*
 	@echo "done."
-	
 
 .PHONY: all
 

@@ -25,7 +25,8 @@
 #ifdef _WIN32 // <-- source files only include the proper Net*_p.h, but this is a double-check
 
 #include <winsock2.h>  // <-- should bring 'windows.h' along with it
-#include <Ws2tcpip.h>
+//#include <Ws2tcpip.h>
+#include <ws2tcpip.h>
 
 #ifndef   BT_SOCKLEN_T
 #  define BT_SOCKLEN_T int

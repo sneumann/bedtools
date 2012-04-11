@@ -65,5 +65,6 @@ bool BamFile::Open(const IBamIODevice::OpenMode mode) {
 
 bool BamFile::Seek(const int64_t& position, const int origin) {
     BT_ASSERT_X( m_stream, "BamFile::Seek() - null stream" );
-    return ( fseek64(m_stream, position, origin) == 0 );
+    //    return ( fseek64(m_stream, position, origin) == 0 );
+    return ( fseeko64(m_stream, position, origin) == 0 );
 }

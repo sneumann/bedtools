@@ -12,11 +12,11 @@ using namespace BamTools;
 using namespace BamTools::Internal;
 
 // platorm-specifics
-#ifdef _WIN32
+//#ifdef _WIN32
 #  include "api/internal/io/NetWin_p.h"
-#else
-#  include "api/internal/io/NetUnix_p.h"
-#endif
+//#else
+//#  include "api/internal/io/NetUnix_p.h"
+//#endif
 
 // standard C++ includes
 #include <cstdlib>

@@ -242,23 +242,23 @@ void FastaReference::open(string reffilename, bool usemmap) {
         index->indexReference(filename);
         index->writeIndexFile(indexFileName);
     }
-    if (usemmap) {
-        usingmmap = true;
-        int fd = fileno(file);
-        struct stat sb;
-        if (fstat(fd, &sb) == -1)
-            cerr << "could not stat file" << filename << endl;
-        filesize = sb.st_size;
-        // map the whole file
-        filemm = mmap(NULL, filesize, PROT_READ, MAP_SHARED, fd, 0);
-    }
+    // if (usemmap) {
+    //     usingmmap = true;
+    //     int fd = fileno(file);
+    //     struct stat sb;
+    //     if (fstat(fd, &sb) == -1)
+    //         cerr << "could not stat file" << filename << endl;
+    //     filesize = sb.st_size;
+    //     // map the whole file
+    //     filemm = mmap(NULL, filesize, PROT_READ, MAP_SHARED, fd, 0);
+    // }
 }
 
 FastaReference::~FastaReference(void) {
     fclose(file);
-    if (usingmmap) {
-        munmap(filemm, filesize);
-    }
+    // if (usingmmap) {
+    //     munmap(filemm, filesize);
+    // }
     delete index;
 }
 

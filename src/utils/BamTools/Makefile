@@ -40,12 +40,14 @@ SOURCES= src/api/BamAlignment.cpp \
          src/api/internal/io/ILocalIODevice_p.cpp \
          src/api/internal/io/RollingBuffer_p.cpp \
          src/api/internal/io/TcpSocketEngine_p.cpp \
-         src/api/internal/io/TcpSocketEngine_unix_p.cpp \
+         src/api/internal/io/TcpSocketEngine_win_p.cpp \
          src/api/internal/io/TcpSocket_p.cpp \
          src/api/internal/sam/SamFormatParser_p.cpp \
          src/api/internal/sam/SamFormatPrinter_p.cpp \
          src/api/internal/sam/SamHeaderValidator_p.cpp \
          src/api/internal/utils/BamException_p.cpp
+
+#         src/api/internal/io/TcpSocketEngine_unix_p.cpp \
 
 OBJECTS= $(SOURCES:.cpp=.o)
 LIBRARY=lib/libbamtools.a
@@ -56,12 +58,12 @@ all: $(LIBRARY)
 
 $(LIBRARY): $(OBJECTS)
 	@echo " * linking $(LIBRARY)"
-	ar cr $@ $^
-	-ranlib $@
+	i586-mingw32msvc-ar cr $@ $^
+	i586-mingw32msvc-ranlib $@
 
 $(OBJECTS): $(SOURCES)
 	@echo " * compiling" $(*F).cpp
-	@$(CXX) -c $(*D)/$(*F).cpp $(LDFLAGS) $(CXXFLAGS) $(INCLUDES) -o $(*D)/$(*F).o
+	$(CXX) -c $(*D)/$(*F).cpp $(LDFLAGS) $(CXXFLAGS) $(INCLUDES) -o $(*D)/$(*F).o
 
 .PHONY: api
 api:

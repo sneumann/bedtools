@@ -46,7 +46,8 @@ int64_t ILocalIODevice::Read(char* data, const unsigned int numBytes) {
 
 int64_t ILocalIODevice::Tell(void) const {
     BT_ASSERT_X( m_stream, "ILocalIODevice::Tell: trying to get file position fromnull stream" );
-    return ftell64(m_stream);
+    //    return ftell64(m_stream);
+    return ftello64(m_stream);
 }
 
 int64_t ILocalIODevice::Write(const char* data, const unsigned int numBytes) {
